@@ -26,8 +26,10 @@ long int digits(long int a){
     return result;
 }
 
-ultra count_pairs_c(int length_data, ultra data[length_data],ultra target){
-    ultra value = initialise(digits((long int) length_data) + 1);
+int count_pairs_c(int length_data, ultra data[length_data],ultra target){
+    // ultra value = initialise(digits((long int) length_data) + 1);
+    int value = 0;
+    printf("%d\n",length_data);
     // printf("%li\n",digits((long int) length_data));
     // printf("%s66\n",value);
     for (int i = 0; i < length_data-1;i++){
@@ -38,21 +40,27 @@ ultra count_pairs_c(int length_data, ultra data[length_data],ultra target){
             //printf("%s %s\n",sub_data,equate);
             //printf("%d %d\n",i,j);
             if (is_zero(equate)){
-                increment(value,0);
+                value++;
             }
         }
     }
-    return ultra_to_str(value);
+    return value;
 }
-ultra main(int argc, void * argv){
-    char ** argv_c = (char **) argv;
-    ultra * Numbers = (ultra *) malloc(sizeof(ultra)*argc);
-    for (int i = 1; i < argc-1; i++){
-        Numbers[i-1] = str_to_ultra(argv_c[i]);
-        //printf("%s\n",Numbers[i-1]);
+int main(int argc, char ** argv){
+   // char ** argv_c = (char **) argv;
+    printf("%d\n",argc-1);
+    ultra * Numbers = (ultra *) malloc(sizeof(ultra)*(argc-1));
+    for (int i = 0; i < argc-1; i++){
+        Numbers[i] = str_to_ultra(argv[i]);
+       // printf("%s\n",Numbers[i]);
     }
-    ultra target = str_to_ultra(argv_c[argc-1]);
-    //printf("%s\n",target);
-    printf("%s\n",count_pairs_c(argc - 2,Numbers, target));
-    return count_pairs_c(argc - 2,Numbers, target);
+    ultra target = str_to_ultra(argv[argc-1]);
+   // printf("%d\n",count_pairs_c(argc - 1,Numbers, target));
+
+   printf("%s\n",target);
+    //printf("%d\n",argc-1);
+   // printf("%d\n",count_pairs_c(argc - 1,Numbers, target));
+   // return count_pairs_c(argc - 1,Numbers, target);
+   //return 0;
 }
+

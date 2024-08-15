@@ -38,11 +38,19 @@ def test_count_pairs():
 
 def count_pairs_file(filename: str) -> int:
     data, target = read_file(filename)
-    C_library = CDLL(r"\home\swarn\DSA\count_pairs.so")
+    C_library = CDLL('./count_pairs.so')
 
     count_pairs_c = C_library.main
     count_pairs_c.argtypes = [c_int,c_void_p]
-    count_pairs_c.restype = [c_wchar_p]
-
-    return count_pairs_c(len(data) + 2," ".join(data) +" " + str(target))
+    count_pairs_c.restype = c_int
+    #argc = c_int(len(data) + 2)
+    #argv = c_void_p("  ".join(str(data)) + " " + str(target))
+    data.append(str(target))
+    argc = c_int(len(data) + 1)
+    for i in range(len(data)):
+        data[i] =str(data[i]).encode('utf-8')
+    #data.append(str(target))
+    print(data,argc)
+    argv = (c_char_p*(len(data)))(*data)
+    return count_pairs_c(argc,argv)
 count_pairs_file("inputs.txt")
